@@ -1,0 +1,14 @@
+output   = "my_models"
+wipe     = true
+no-tests = true
+add-enum-types = true
+
+[psql]
+  dbname = "postgres"
+  host   = "db"
+  port   = 15432
+  user   = "postgres"
+  pass   = "postgres"
+  sslmode= "disable"
+  schema = "public"
+  blacklist = ["migrations", "other"]

@@ -1,0 +1,38 @@
+version: "3.8"
+
+service:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/go/Dockerfile
+      volumes:
+        - ./app:/go/src/app
+      tty: true
+      depends_on:
+        - db
+      ports:
+        ${APP_PORT}:${APP_PORT}
+      networks:
+        - metis-network
+  db:
+    build:
+      context: .
+      dockerfile: ./docker/postgres/Dockerfile
+    environment:
+      - POSTGRES_DB: postgres
+      - POSTGRES_USER: postgres
+      - POSTGRES_PASSWORD: postgres
+    volumes:
+      - db-store:/var/lib/postgres/data
+      - ./database/init:docker-entorypoint-initdb.d
+    ports:
+      ${DB_PORT}:${DB_PORT}
+    network:
+    - metis-network
+volumes:
+  db-store:
+networks:
+  metis-network:
+    external: true
+
+
