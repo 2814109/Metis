@@ -27,6 +27,18 @@ func (uu *UserUpdate) Where(ps ...predicate.User) *UserUpdate {
 	return uu
 }
 
+// SetName sets the "name" field.
+func (uu *UserUpdate) SetName(s string) *UserUpdate {
+	uu.mutation.SetName(s)
+	return uu
+}
+
+// SetEmailAddress sets the "email_address" field.
+func (uu *UserUpdate) SetEmailAddress(s string) *UserUpdate {
+	uu.mutation.SetEmailAddress(s)
+	return uu
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (uu *UserUpdate) Mutation() *UserMutation {
 	return uu.mutation
@@ -68,6 +80,12 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := uu.mutation.Name(); ok {
+		_spec.SetField(user.FieldName, field.TypeString, value)
+	}
+	if value, ok := uu.mutation.EmailAddress(); ok {
+		_spec.SetField(user.FieldEmailAddress, field.TypeString, value)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, uu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{user.Label}
@@ -86,6 +104,18 @@ type UserUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *UserMutation
+}
+
+// SetName sets the "name" field.
+func (uuo *UserUpdateOne) SetName(s string) *UserUpdateOne {
+	uuo.mutation.SetName(s)
+	return uuo
+}
+
+// SetEmailAddress sets the "email_address" field.
+func (uuo *UserUpdateOne) SetEmailAddress(s string) *UserUpdateOne {
+	uuo.mutation.SetEmailAddress(s)
+	return uuo
 }
 
 // Mutation returns the UserMutation object of the builder.
@@ -158,6 +188,12 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := uuo.mutation.Name(); ok {
+		_spec.SetField(user.FieldName, field.TypeString, value)
+	}
+	if value, ok := uuo.mutation.EmailAddress(); ok {
+		_spec.SetField(user.FieldEmailAddress, field.TypeString, value)
 	}
 	_node = &User{config: uuo.config}
 	_spec.Assign = _node.assignValues
