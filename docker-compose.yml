@@ -9,12 +9,12 @@ services:
       - ./app:/go/src/app
     tty: true 
     depends_on:
-      - db
+      - postgres
     ports:
       - ${APP_PORT}:${APP_PORT}
     networks:
       - metis-network
-  db:
+  postgres:
     build:
       context: .
       dockerfile: ./container/postgres/Dockerfile
@@ -26,7 +26,7 @@ services:
       - db-store:/var/lib/postgres/data
       - ./database/init:/docker-entorypoint-initdb.d
     ports:
-      - ${DB_PORT}:${DB_PORT}
+      - 5432:5432
     networks:
     - metis-network
 volumes:
