@@ -6,7 +6,7 @@ RUN go install github.com/cosmtrek/air@latest && go install github.com/volatilet
 RUN mkdir /go/src/app
 WORKDIR /go/src/app
 ADD . /go/src/app
-COPY ./app/go.mod ./app/go.sum ./
+COPY ./app/go.mod ./
 RUN go mod tidy
 
 CMD ["air", "-c", ".air.toml"]

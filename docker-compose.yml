@@ -24,7 +24,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - db-store:/var/lib/postgres/data
-      - ./database/init:docker-entorypoint-initdb.d
+      - ./database/init:/docker-entorypoint-initdb.d
     ports:
       - ${DB_PORT}:${DB_PORT}
     networks:
