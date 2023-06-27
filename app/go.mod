@@ -1,3 +1,3 @@
-module example.com/m/v2
+module app
 
 go 1.20
